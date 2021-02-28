@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>i-ungo Official</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="src/css/style.css">
+  <link rel="stylesheet" href="src/css/style_sub.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-scrollto"></script>
+</head>
+<body>
+  <div id="app" :class="isOpen ? 'overflow-hidden' : ''">
+    <header class="text-white font-Righteoues lg:fixed" id="header">
+      <h2 class="title text-white text-center">i-ungo</h2>
+      <div :class="width >= 1024 ? 'header-div' : 'hidden'" :key="width">
+        <ul class="text-4xl h-full lg:flex lg:absolute lg:right-0">
+          <li class="ml-14 text-center h-full"><a v-scroll-to="{ element: '#top' }" class="header-li-a px-5">Top</a></li>
+          <li class="ml-14 text-center h-full"><a v-scroll-to="{ element: '#news' }" class="header-li-a px-5">News</a></li>
+          <li class="ml-14 text-center h-full"><a v-scroll-to="{ element: '#teams' }" class="header-li-a px-4">Teams</a></li>
+          <li class="ml-14 text-center h-full"><a v-scroll-to="{ element: '#festival' }" class="header-li-a px-3">Festival</a></li>
+          <li class="ml-14 text-center h-full"><a v-scroll-to="{ element: '#contact' }" class="header-li-a px-3">Contact</a></li>
+          <li class="w-44 ml-16 text-center h-full"><a v-scroll-to="{ element: '#footer' }" class="header-li-a px-4">Links</a></li>
+        </ul>
+      </div>
+      <div :class="width >= 1024 ? 'hidden' : 'fixed bottom-20 right-14 bg-orange w-24 h-24 rounded-full z-50'">
+        <div v-if="isOpen" class="bg-fixed"></div>
+        <button @click="isOpen = !isOpen" class="btn-fixed block mx-auto my-6 focus:outline-none">
+          <svg class="h-12 w-12 fill-current" viewBox="0 0 24 24">
+              <path v-show="!isOpen" d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z"/>
+              <path v-show="isOpen" d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
+          </svg>                       
+        </button>
+        <ul v-if="isOpen" class="ul-fixed fixed top-32 rounded-xl text-center">
+          <li class="li-fixed rounded"><a v-scroll-to="{ element: '#header' }" @click="asyncFadeOut" class="block">Top</a></li>
+          <li class="li-fixed rounded"><a v-scroll-to="{ element: '#news' }" @click="asyncFadeOut" class="block">News</a></li>
+          <li class="li-fixed rounded"><a v-scroll-to="{ element: '#teams' }" @click="asyncFadeOut" class="block">Teams</a></li>
+          <li class="li-fixed rounded"><a v-scroll-to="{ element: '#festival' }" @click="asyncFadeOut" class="block">Festival</a></li>
+          <li class="li-fixed rounded"><a v-scroll-to="{ element: '#contact' }" @click="asyncFadeOut" class="block">Contact</a></li>
+          <li class="li-fixed rounded"><a v-scroll-to="{ element: '#links' }" @click="asyncFadeOut" class="block">Links</a></li>
+        </ul>
+      </div>
+    </header>
+    <main>
+      <section id="top" class="top h-480 sm:h-screen2">
+        <div class="bg-img-top h-480 sm:h-screen2 relative">
+          <!-- <img class="bgimg-top" src="../img/soial-media-5187243_1920.png" alt="メイン背景"> -->
+          <h1 class="text-6xl md:text-8xl lg:text-85xl text-lightGreen font-bold ml-6p absolute top-32 md:top-1/2">やりたいこと、<br :class="width >= 555 ? 'hidden' : ''">第一に。</h1>
+          <div class="text-lightGreen w-9/10 max-w-280 ml-7p  mt-4 absolute top-80 md:top-6/10">
+            <p class="text-2xl md:text-3xl max-w-256 mb-5 pstyle">
+              私達は, 自分の可能性を信じ, 常に未来を見据えた挑戦し続けるサークルです.
+            </p>
+            <p class="text-2xl md:text-3xl mb-5 pstyle">
+              仲間と共に努力する事を通じて, 困難なことへの挑戦に対する<br>ハードルを下げ, 多岐にわたる挑戦の中で, 変化し続けてきました.</p>
+            <p class="text-2xl md:text-3xl pstyle">
+              理想の未来を切り開くため, 新たな可能性を見つけませんか？
+            </p>
+          </div>
+        </div>
+      </section>
+      <section id="news" ref="news" class="news bg-deepGreen text-white sm:min-h-980">
+        <div class="content">
+            <img class="img-news" src="../img/1720_mono_pk.svg" alt="ホワイトボード">
+            <div class="title-border w-64"></div>
+            <h2 class="sec-title">News</h2>
+            <ul class="sm:mt-52">
+              <li class="li-news" v-for="item in items" v-bind="item.date">
+                <p class="p-li-news">{{ item.date }}</p>
+                {{ item.content }}
+              </li>
+            </ul>
+          <div class="btn mt-16 mb-44 mr-0 ml-auto text-center w-auto border rounded-full max-h-20">
+            <button id="btn_news" class="btn-text text-deepGreen text-56xl focus:outline-none">More...</button>
+            <!-- <p id="btn_news" class="btn-text text-deepGreen text-56xl">More...</p> -->
+          </div>
+        </div>
+      </section>
+      <section id="teams" class="teams bg-white text-lightGreen min-h-full sm:min-h-980">
+        <div class="content">
+          <div>
+            <div class="title-border w-77"></div>
+            <h2 class="sec-title">Teams</h2>
+            <div class="group-p">
+              <p class="sec-p">
+                i-ungoでは,プログラミング部門をさらに３つのチームに分けて活動しています.
+              </p>
+              <p class="sec-p">
+                i-ungoでは、プログラミング部門をさらに３つのチームに分けて活動しています。i-ungoでは、プログラミング部門をさらに３つのチームに分けて活動しています。i-ungoでは、プログラミング部門をさらに３つのチームに分けて活動しています。i-ungoでは、プログラミング部門をさらに３つのチームに分けて活動しています。
+              </p>
+            </div>
+          </div>
+          <img src="../img/993_line.svg" alt="パソコン" class="img-teams" id="pc">
+          <!-- ここにSVGか何かを挿入 -->
+        </div>
+      </section>
+      <section id="festival" class="festival bg-deepGreen text-white min-h-980">
+        <div class="content">
+          <div>
+            <div class="title-border w-64"></div>
+            <h2 class="sec-title">Festival</h2>
+            <div class="group-p">
+              <p class="sec-p">
+                i-ungoではHTML/CSS, その他複数のプログラミング言語の学習を行っています.
+              </p>
+              <p class="sec-p">
+                アウトプットによって学習の理解度や習熟度を上げたり, 人の作品から学ぶことを目的として            FESTIVALを行っています.
+              </p>
+              <p class="sec-p">
+                最終的に提出された作品は発表会で発表します. 過去の入賞作品は専用ページにて掲載しています.
+              </p>
+            </div>
+          </div>
+          <div class="btn button mt-40">
+            <p class="btn-text button-text">Go to...</p>
+          </div>
+          <img src="../img/944_color.png" alt="女子" class="img-festival sm:absolute sm:right-0">
+          <!-- ここに作品のスライダーを設置 -->
+        </div>
+      </section>
+      <section id="contact" class="contact bg-white text-lightGreen min-h-980">
+        <div class="content">
+          <div>
+            <div class="title-border w-64"></div>
+            <h2 class="sec-title">Contact</h2>
+            <div class="group-p">
+              <p class="sec-p">
+                i-ungoに興味を持った方, どんな活動をしているのか詳しく知りたい方, その他いろいろな情報を知りたい方はぜひ公式Twitterをご覧ください！
+              </p>
+              <p class="sec-p">
+                またi-ungoに入りたい方や直接話を聞いてみたい方は, 些細なことでも大丈夫です, i-ungo公式TwitterからDM・リプライ等でご連絡ください.
+              </p>
+              <p class="sec-p mt-32 text-3xl">i-ungo公式メール<br>
+                R2i.ungo2020@gmail.com
+              </p>
+            </div>
+            <div class="wrapper-twimg">
+              <div class="wrapper-tw flex justify-center lg:inline-block">
+                <!-- <a class="twitter-timeline" data-width="300" data-height="400" href="https://twitter.com/at_last_ss?ref_src=twsrc%5Etfw">Tweets by at_last_ss</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+                <a class="twitter-timeline" data-width="290" data-height="480" href="https://twitter.com/at_last_ss?ref_src=twsrc%5Etfw">Tweets by at_last_ss</a>
+                <!-- <a class="twitter-timeline" data-width="280" data-height="500" data-theme="dark" href="https://twitter.com/at_last_ss?ref_src=twsrc%5Etfw">Tweets by at_last_ss</a> -->
+                <!-- <a id="twitterTimeliTne" class="twitter-timeline" style="margin-bottom: 5rem !important;" position="absolute" data-width="400" data-height="500" data-theme="light" href="https://twitter.com/at_last_ss?ref_src=twsrc%5Etfw">Tweets by at_last_ss</a> -->
+              </div>
+              <img class="img-contact lg:inline-block" src="../img/7075_color.png" alt="男子">
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="lg:min-h-1000" id="footer">
+      <!-- <div id="links" class="links text-white ml-3p mt-28 sm:mt-20 sm:ml-15p lg:absolute lg:mt-64 lg:right-16p"> -->
+      <div id="links" class="links text-white mt-28">
+        <div class="wrapper-links">
+          <h2 class="font-Righteoues text-center sm:text-left lg:text-left text-65xl lg:text-74xl"><span class="span-footer-h2" id="links-h2">O</span>ther Links</h2>
+          <ul class="main-link text-3xl ml-14">
+            <li class="li-footer ml-2"><a>Programing Department Page</a></li>
+            <li class="li-footer ml-2"><a>Festival Page</a></li>
+            <li class="li-footer ml-2"><a>Members Page</a></li>
+            <li class="li-footer ml-2 li-footer-last"><a>Team Pages（未実装）</a></li>
+          </ul>
+          <ul class="sub-link text-3xl ml-32 lg:ml-48 mt-6 mb-6 sm:mt-12 relative">
+            <li class="li-footer"><a>Frontend Team（未実装）</a></li>
+            <li class="li-footer"><a>Backend Team（未実装）</a></li>
+            <li class="li-footer"><a>Game Team（未実装）</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="i-ungo text-lightGreen text-center mb-40 lg:text-left lg:absolute lg:bottom-4 lg:left-8p pt-20 lg:mt-0">
+        <h3 class="font-Righteoues text-86xl">i-ungo</h3>
+        <p class="update font-sans">最終更新日 2020.12.18</p>
+        <p class="copyright font-sans">© 2020 i-ungo</p>
+      </div>
+    </footer>
+  </div>
+  <script src="src/js/main.js"></script>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <!-- <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+  </script>
+</body>
+</html>
